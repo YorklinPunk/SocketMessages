@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<form id="loginForm" method="post" action="/Home/Login">
+    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+    <button type="submit">Login</button>
+</form>
+
+@* @if (ViewData.ModelState["username"] != null && ViewData.ModelState["username"].Errors.Count > 0)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData.ModelState["username"].Errors[0].ErrorMessage
+    </div>
+} *@

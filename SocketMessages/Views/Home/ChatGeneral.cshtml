@@ -1,0 +1,216 @@
+﻿@{
+    ViewData["Title"] = "Chat";
+    var Username = ViewBag.Username as string;
+    var UsernameId = ViewBag.UsernameId as string;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../Views/styles/ChatGeneral.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>    
+</head>
+<body class="background">
+    <div class="container">
+        <div class="sidebar">
+            <h2>Usuarios Conectados</h2>
+            <ul id="usersList"></ul>
+
+            <h2>Tus Salas</h2>
+            <ul id="roomsList"></ul>
+        </div>
+
+        <div class="chat-area">
+            <h1>Welcome, @Username</h1>
+            <h3>Global Chat</h3>
+            <ul id="messagesList"></ul>
+            <div style="display: flex; align-items: center;">
+                <input type="text" id="messageInput" />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+
+    @* <div>
+        <input type="text" id="messageInput" />
+        <button id="sendButton">Send</button>
+    </div>
+    <ul id="messagesList"></ul> *@
+
+    <script>
+        "use strict";
+
+        var Username = "@ViewBag.Username";
+        var UsernameId = "@ViewBag.UsernameId";
+        var connection = new signalR.HubConnectionBuilder().withUrl(`/chatHub?usernameid=${UsernameId}`).build();
+        var usersList = document.getElementById("usersList");
+
+        function sendMessage() {
+            var message = document.getElementById("messageInput").value;
+            if (message.trim() == 0){
+                return
+            }
+            //FALTA CAMBIAR EL NOMBRE AL ENVIAR MENSAJES
+            connection.invoke("SendMessageToGroup", "Global", UsernameId, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+            document.getElementById("messageInput").value = "";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var sendButton = document.getElementById("sendButton");
+            var messageInput = document.getElementById("messageInput");
+
+            sendButton.addEventListener("click", function (event) {
+                sendMessage();
+            });
+
+            messageInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        });
+
+        //ESTO PARA ALGUIEN QUE SE CONECTA POR PRIMERA VEZ
+        connection.start().then(async function () {
+            console.log("Connected to hub");
+            getRoomNamesCollection(UsernameId);
+            await getConnectedUsers();
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        //ESTO ES PARA AGUIEN QUE YA ESTÁ CONECTADO
+        //OBTIENES AL USUARIO QUE SE CONECTÓ
+        connection.on("UserJoined", async function (user) {
+            console.log("Connected UserJoined");
+
+            var userExists = Array.from(usersList.children).some(function (li) {
+                return li.getAttribute("userID") === user;
+            });
+
+            if (!userExists && usersList.children.length != 0) {
+                // Si el usuario no existe, invocar la función para obtener el nombre y agregarlo a la lista
+                connection.invoke("GetUsernameById", user).then(function (userName) {
+                    setChildInUserList(user, userName)
+                }).catch(function (err) {
+                    return console.error(err.toString());
+                });
+            } else {
+                console.log("User already in the list.");
+            }
+        });
+
+        connection.on("UserLeft", function (user) {
+            var items = document.querySelectorAll("#usersList li");
+            items.forEach(function (item) {
+                if (item.textContent === user) {
+                    item.remove();
+                }
+            });
+            console.log(user + " (" + connectionId + ") disconnected");
+            getConnectedUsers();
+        });
+
+        connection.on("ReceiveMessage", function (user, message) {            
+            console.log("Message received: ", user, message);
+            const messageList = document.getElementById('messagesList');                       
+            var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            
+            connection.invoke("GetUsernameById", user).then(function (userName) {
+                var li = document.createElement("li");
+                var encodedMsg = userName + " : " + msg;
+                li.textContent = encodedMsg;
+                
+                if (user == UsernameId) {
+                    li.classList.add('my-message');
+                } else {
+                    li.classList.add('other-message');
+                }
+
+                messageList.insertBefore(li, messageList.firstChild);
+                messageList.scrollTop = messageList.scrollHeight;
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });            
+        });
+
+        connection.on("GroupJoined", function (groupid) {
+            window.location.href = `/Home/GroupChat?groupid=${groupid}`;
+        });
+        
+        // actualiza lista de salas
+        function getRoomNamesCollection(UsernameId) {
+            connection.invoke("GetRoomNamesCollection", UsernameId).then(function (rooms) {
+                
+                updateRoomsAsigned(rooms)
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        // lista de usuarios
+        async function getConnectedUsers() {
+            connection.invoke("GetConnectedUsers").then(async function (users) {
+                users.forEach(async function (user) {
+                    setChildInUserList(user.userNameId, user.userName)
+                });
+            }).catch(function (err) {
+                return console.error(err.toString());                
+            });
+        }
+
+        function setChildInUserList(userId, userName){
+            var li = document.createElement("li");
+            li.setAttribute("userID", userId);
+            li.textContent = userName;
+            usersList.appendChild(li);
+        }
+
+        // actualiza lista de salas
+        function updateRoomsAsigned(rooms) {
+            var roomsList = document.getElementById("roomsList");
+            roomsList.innerHTML = "";
+
+            rooms.forEach((room) => {
+                var li = document.createElement("li");
+                li.setAttribute("idRoom",(room._id).toString())
+                li.addEventListener("click", () => {
+                    joinGroup(room._id);
+                });
+                li.textContent = room.name;
+                roomsList.appendChild(li);
+            });
+        }
+
+        // envio mensaje a un grupo
+        @* function sendMessageToGroup() {
+            var message = document.getElementById("messageInput").value;
+            var groupName = 'Global'; // Puedes obtener esto dinámicamente según sea necesario
+            connection.invoke("SendMessageToGroup", groupName, Username, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        } *@
+
+        // Unirse a un grupo
+        function joinGroup(idGroup) {
+            connection.invoke("JoinGroup", idGroup).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        // FALTA BOTON PARA Salir de un grupo
+        function leaveGroup(idGroup) {
+            connection.invoke("LeaveGroup", idGroup).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+    </script>
+</body>
+</html>

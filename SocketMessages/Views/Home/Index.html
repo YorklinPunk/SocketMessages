@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles/ChatGeneral.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>    
+</head>
+<body class="background">
+    <div class="container">
+        <div class="sidebar">
+            <h2>Usuarios Conectados</h2>
+            <ul id="usersList"></ul>
+
+            <h2>Tus Salas</h2>
+            <ul id="roomsList"></ul>
+        </div>
+
+        <div class="chat-area">
+            <h1>Welcome, @Username</h1>
+            <h3>Global Chat</h3>
+            <ul id="messagesList"></ul>
+            <div style="display: flex; align-items: center;">
+                <input type="text" id="messageInput" />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

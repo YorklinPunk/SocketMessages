@@ -1,0 +1,35 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = SocketMessages
+build_property.RootNamespace = SocketMessages
+build_property.ProjectDir = C:\Users\Yorklin\OneDrive\Desktop\SocketMessages\SocketMessages\SocketMessages\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Yorklin\OneDrive\Desktop\SocketMessages\SocketMessages\SocketMessages
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Yorklin/OneDrive/Desktop/SocketMessages/SocketMessages/SocketMessages/Views/Home/ChatGeneral.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0R2VuZXJhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yorklin/OneDrive/Desktop/SocketMessages/SocketMessages/SocketMessages/Views/Home/GroupChat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHcm91cENoYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yorklin/OneDrive/Desktop/SocketMessages/SocketMessages/SocketMessages/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yorklin/OneDrive/Desktop/SocketMessages/SocketMessages/SocketMessages/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

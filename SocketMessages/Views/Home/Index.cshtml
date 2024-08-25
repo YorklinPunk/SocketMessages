@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../Views/styles/Index.css">
+</head>
+<body class="indexGeneral">
+    <div class="background">
+        <div class="content">
+            <div class="form-container">
+                <label>Bienvenido a YorkChat...!! <br> Eres uno de los primeros <br></label>
+                <label style="color:rgb(7, 205, 139)">Ingresa tu nickname*</label>
+                <form method="post" action="/Home/Login">
+                    <input type="text" name="username" placeholder="Enter your username" required />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

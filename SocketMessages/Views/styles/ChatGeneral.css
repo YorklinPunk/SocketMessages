@@ -1,0 +1,107 @@
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #299bff, #ad05f1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Ensure no scrollbars appear */
+}
+
+.sidebar {
+    width: 20%;
+    background-color: rgba(121, 163, 235, 1);
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow-y: auto; /* Scroll if content overflows */
+}
+
+.chat-area {
+    width: 80%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.39);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#messagesList {
+    display: flex;
+    flex-direction: column-reverse;
+    flex: 1;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+
+#messageInput {
+    width: calc(100% - 90px); /* Adjust width based on button size */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#sendButton {
+    width: 80px;
+    padding: 10px;
+    background-color: #105591; /* Match background gradient */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#sendButton:hover {
+    background-color: #823d9e; /* Match gradient */
+}
+
+/* Additional styling for lists */
+#usersList, #roomsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#usersList li, #roomsList li {
+    margin-bottom: 10px;
+    background-color: #e0e0e0;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+
+
+#messagesList li {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Estilo para mensajes propios */
+.my-message {
+    align-self: flex-end; /* Alinea a la derecha */
+    background-color: #823d9e; /* Color de fondo acorde al gradiente */
+    color: white;
+}
+
+/* Estilo para mensajes de otros usuarios */
+.other-message {
+    align-self: flex-start; /* Alinea a la izquierda */
+    background-color: #105591; /* Color de fondo acorde al gradiente */
+    color: white;
+}

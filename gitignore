@@ -1,0 +1,14 @@
+# Binaries
+**/bin/
+**/obj/
+
+# Build output
+**/temp/
+**/logs/
+
+# Visual Studio
+**/.vs/
+**/.vscode/
+
+# Publish output
+**/publish/

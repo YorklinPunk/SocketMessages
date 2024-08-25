@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Group Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.0/signalr.min.js"></script>
+</head>
+<body>
+    <div>
+        <h2>Group: @ViewBag.GroupName</h2>
+        <h3>Welcome, @ViewBag.Username!</h3>
+        <h3>Connected Users</h3>
+        <ul id="usersList"></ul>
+
+        <h3>Group Chat</h3>
+        <div>
+            <input type="text" id="messageInput" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <ul id="messagesList"></ul>
+    </div>
+
+    <script>
+        var usernameId = '@ViewBag.usernameId';
+        var groupName = '@ViewBag.GroupName';
+        var groupId = '@ViewBag.GroupId';
+        var connection = new signalR.HubConnectionBuilder().withUrl(`/chatHub?groupid=${groupId}&usernameid=${usernameId}`).build();
+
+        connection.on("ReceiveMessage", function (user, message) {
+            var li = document.createElement("li");
+            document.getElementById("messagesList").appendChild(li);
+            li.textContent = `${user}: ${message}`;
+        });
+
+        connection.on("UserJoined", function (user) {
+            //CADA VEZ QUE ENTRE UN NUEVO USUARIO TRAER LOS USUARIOS CONECTADOS DEL ROOM
+            // manda el idroom en string            
+            getUsersConnected()
+        });
+
+        connection.on("UserLeft", function (user) {
+            var items = document.querySelectorAll("#usersList li");
+            items.forEach(function (item) {
+                if (item.textContent === user) {
+                    item.remove();
+                }
+            });
+        });
+
+        connection.start().then(function () {
+            connection.invoke("JoinGroup", groupId).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        function sendMessage() {
+            var message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessageToGroup", groupId, usernameId, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        }
+
+        function getUsersConnected(){
+            connection.invoke("GetUserConnectedByRoom", groupId).then(function (users) {
+                console.log(users);
+                var usersList = document.getElementById("usersList");
+                usersList.innerHTML = ""
+                
+                users.forEach((user) => {
+                    var li = document.createElement("li")
+                    usersList.appendChild(li);
+                    li.textContent = user
+                })
+                //updateRoomsAsigned(rooms)
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+    </script>
+</body>
+</html>

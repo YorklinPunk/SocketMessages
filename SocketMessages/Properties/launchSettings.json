@@ -1,0 +1,63 @@
+{
+  "profiles": {
+    "SocketMessages": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "launchUrl": "Home/Index",
+      //"applicationUrl": "https://192.168.1.37:7285;http://192.168.1.37:5241",
+      "applicationUrl": "https://localhost:7285;http://localhost:5241"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchUrl": "Home/Index",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://+:443;http://+:80"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    },
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchUrl": "Home/Index",
+      "launchBrowser": true,
+      //"applicationUrl": "http://192.168.1.37:5299",
+      "applicationUrl": "http://localhost:5299",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchUrl": "Home/Index",
+      "launchBrowser": true,
+      //"applicationUrl": "https://192.168.1.37:7079;http://localhost:5299",
+      "applicationUrl": "https://localhost:7079;http://localhost:5299",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:22973",
+      "sslPort": 44300
+    }
+  }
+}
