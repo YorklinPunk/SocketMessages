@@ -1,6 +1,6 @@
-# Ignorar carpetas de compilación
-bin/
-obj/
+# Ignorar carpetas de compilación en la carpeta SocketMessages
+SocketMessages/bin/
+SocketMessages/obj/
 
-# Ignorar carpeta de configuración de Visual Studio
+# Ignorar carpeta de configuración de Visual Studio en la raíz
 .vs/
