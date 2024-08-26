@@ -1,14 +1,6 @@
-# Binaries
-**/bin/
-**/obj/
+# Ignorar carpetas de compilación
+bin/
+obj/
 
-# Build output
-**/temp/
-**/logs/
-
-# Visual Studio
-**/.vs/
-**/.vscode/
-
-# Publish output
-**/publish/
+# Ignorar carpeta de configuración de Visual Studio
+.vs/
