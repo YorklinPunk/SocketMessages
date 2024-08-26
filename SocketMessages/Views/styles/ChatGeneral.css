@@ -23,7 +23,8 @@
     padding: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    overflow-y: auto; /* Scroll if content overflows */
+    overflow-y: auto; /* Scroll if content overflows */    
+    font-family: monospace;
 }
 
 .chat-area {
@@ -33,9 +34,11 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    font-family: monospace;
 }
 
 #messagesList {
+    max-width: 100%;
     display: flex;
     flex-direction: column-reverse;
     flex: 1;
@@ -43,7 +46,13 @@
     padding: 0;
     margin-bottom: 10px;
     overflow-y: auto;
-}
+    font-family: monospace;
+    border:solid 1px rgb(0, 0, 0);
+    border-radius: 15px;
+    -webkit-border-radius: 15px;/* Estilo de la barra de desplazamiento */
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #823d9e #10559177; /* Color de la barra y el fondo en Firefox */
+}   
 
 #messageInput {
     width: calc(100% - 90px); /* Adjust width based on button size */
@@ -72,7 +81,13 @@
 /* Additional styling for lists */
 #usersList, #roomsList {
     list-style-type: none;
-    padding: 0;
+    padding: 5px;
+    max-height: 40%;
+    overflow: auto;
+
+    /* Estilo de la barra de desplazamiento */
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #823d9e #10559177; /* Color de la barra y el fondo en Firefox */
 }
 
 #usersList li, #roomsList li {
